@@ -1,0 +1,263 @@
+We have Pen and we need to design a class for the same. Can suggest the attributes and behavior/methods/actions related to the Pen class.
+  
+   public class Pen  {
+        String brand;
+        String color;
+        float price;
+
+        public void writing() {}
+        public void drawing() {}
+        public void highlighting() {}
+        
+    }
+Pen pen=new Pen();
+Pen p=new Pen();
+Pen p=new Pen();
+--------------------------------------------------------------------------------------------------
+We have Paper and we need to design a class for the same.
+   public class Paper {
+      String size;
+      String texture;
+      String color;
+      String quality;
+      String paperType;
+
+     public void printing() {}
+     public void painting()  {}
+     public void wrapping()  {}
+     public void sketching() {}
+    }
+Paper paper=new Paper();
+<classname> <objectname>=new <classname>();
+----------------------------------------------------------------------------------------------------
+We were writing multiple class and all the classes are in same file. But that is not good. 
+From the perspective of coding we should create separate file for each of the class being designed.
+
+  package infosys.demo.classobjectdemo1;
+
+public class Student {
+ private int roll;
+ private String name;
+ private int marks;
+ 
+ public void setStudentData()
+ {
+	 roll=1;
+	 name="Amit";
+	 marks=70;
+ }
+ public void displayData()
+ {
+	 System.out.println(roll);
+	 System.out.println(name);
+	 System.out.println(marks);
+ }
+ 
+}
+
+
+package infosys.demo.classobjectdemo1;
+
+public class StudentMain {
+
+	public static void main(String[] args) {
+		Student student=new Student();
+		student.setStudentData();
+		student.displayData();
+	}
+
+}
+---------------------------------------------------------- 
+How to create multiple objects?
+
+     Student student1=new Student();
+     Student student2=new Student();
+     Student student3=new Student();
+     student1.setStudentData();
+     student2.setStudentData();
+     student3.setStudentData();
+---------------------------------------------------------------------------------------
+Q. The above approach is giving me the same data for all the students. How to solve this?
+
+* go for different parameters ( parameterized method). So which method will be parameterized?
+package infosys.demo.classobjectdemo2;
+
+public class Student {
+ private int roll;
+ private String name;
+ private int marks;
+ 
+ public void setStudentData(int r,String nm, int m)
+ {
+	 roll=r;
+	 name=nm;
+	 marks=m;
+ }
+ public void displayData()
+ {
+	 System.out.println(roll);
+	 System.out.println(name);
+	 System.out.println(marks);
+ }
+ 
+}
+
+
+package infosys.demo.classobjectdemo2;
+
+public class StudentMain {
+
+	public static void main(String[] args) {
+		Student student=new Student();
+		student.setStudentData(1,"Ram",50);
+		student.displayData();
+                Student student1=new Student();
+                student1.setStudentData(2,"Nidhi",45);
+                student1.displayData();
+                
+	}
+
+}
+----------------------------------------------------------------------
+Q What will be the output of this code?
+
+package infosys.demo.classobjectdemo3;
+
+public class Student {
+ private int roll;
+ private String name;
+ private int marks;
+ 
+ public void setStudentData(int r,String nm, int m)
+ {
+	int roll=r;
+	String name=nm;
+	int marks=m;
+ }
+ public void displayData()
+ {
+	 System.out.println(roll);
+	 System.out.println(name);
+	 System.out.println(marks);
+ }
+ 
+}
+
+
+package infosys.demo.classobjectdemo3;
+
+public class StudentMain {
+
+	public static void main(String[] args) {
+		Student student=new Student();
+		student.setStudentData(1,"Ram",50);
+		student.displayData();
+                Student student1=new Student();
+                student1.setStudentData(2,"Nidhi",45);
+                student1.displayData();
+                
+	}
+
+}
+---------------------------------------------------------------------------------------
+In the above program we have instance variables and at same time we have local variables
+with the same name. local variables will get the preference in comparison to the instance
+variable. In the above case maybe by mistake we declared local variable with the same name.
+So in that case the local variables are assigned with the values which are comming as 
+/ From local variable r the value is getting 
+ // stored in the local variable roll and
+ // same with rest of the two variables 
+ // namely name and marks
+// And ultimately the instance variables are not initialied with the data passed as parameter.
+// and it is imitialised with the default value. That is the reason we are getting the 
+// values as 0, null and 0.
+---------------------------------------------------------------------------------------------
+Q So we can use Scanner object to get different set of values for the objects.
+Ans Yes
+Q So should scanner be local to the method setData or it should be one of instance variable
+like roll, name and marks.
+Ans It will be best if we declare it as a local because we never heard that Students are
+having attribute like scanner but we know student can have attribute like roll,name and marks.
+------------------------------------------------------------------------------------------
+Q So currently suppose the student is a new joinee and we dont need to enter his or her marks.
+But the way we wrote our program , we are forced to enter his or her marks.So how it can
+be solved?
+Ans: For every propery we should have a pair of methods:-
+One method to set the values ====> setter method
+One method to access/display the values ===> getter method
+
+package infosys.demo.classobjectdemo5;
+   
+     public class Student {
+      private int roll;
+      private String name;
+      private int marks;
+     // We have a specific way of writing this setter methods
+     // the return type of setter method will be always void
+     // setter method starts with the word set followed by the attribute name making the 
+     // first character in uppercase
+      // parameter type will be same as the type of the attribute for which we are 
+      // setting the value
+      public void setRoll(int r){
+          roll=r;
+      }
+      // get method starts with get followed by the attribute name as first character in 
+      // uppercase
+      // return datatype will be same as the type of the attribute for which we are 
+      // accessing/reading the value
+      public int getRoll(){
+        return roll;
+      }
+      public void setName(String nm){
+       name=nm;
+      }
+      public String getName(){
+       return name;
+      }
+      public void setMarks(int m) {
+       marks=m;
+      }
+      public int getMarks() {
+        return marks;
+      }
+     } 
+      
+
+    package infosys.demo.classobjectdemo5;
+     public class StudentMain{
+       public static void main (String s[]) {
+         Student student1=new Student();
+         Student student2=new Student();
+         Scanner scanner=new Scanner(System.in);
+         System.out.println("Enter the roll number");
+         int roll=scanner.nextInt();
+         student1.setRoll(roll);
+         System.out.println("Enter the name");
+         String name=scanner.next();
+         student1.setName(name);
+         System.out.println("Enter the marks");
+         int marks=scanner.nextInt();
+         student1.setMarks(marks);
+         System.out.println("The details of the first student");
+         System.out.println(student1.getRoll());  // Withing System.out.println we can call a 
+         // method which is returning a value. Within System.out.println we cannot call a 
+         // method which return type is void
+         System.out.println(student1.setRoll(roll));
+         System.out.println(student1.getName());
+         System.out.println(student1.getMarks());
+         System.out.println("Enter the roll number");
+         student2.setRoll(scanner.nextInt());
+         System.out.println("Enter the name");
+         student2.setName(scanner.next());
+         /* System.out.println("Enter the marks");
+         student2.setMarks(scanner.nextInt()); */
+         System.out.println(student2.setRoll(roll));
+         System.out.println(student2.getName());
+        /*  System.out.println(student2.getMarks()); */
+         
+         
+         
+         
+       }
+    }
+
